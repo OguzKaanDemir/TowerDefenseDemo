@@ -10,7 +10,7 @@ namespace Scripts.Editor.ObjectManagement
         {
             objectDeleter.DeleteObject(sceneView, position);
 
-            var instance = (GameObject)PrefabUtility.InstantiatePrefab(prefab);
+            var instance = (GameObject)PrefabUtility.InstantiatePrefab(prefab, GameObject.Find("Map").transform);
             if (instance == null)
             {
                 Debug.LogError("Please select an object");
