@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEditor;
+using Scripts.Path;
 using Scripts.Editor.Grid;
 using Scripts.Editor.Interfaces;
 using Scripts.Editor.MapSettings;
@@ -9,6 +10,8 @@ namespace Scripts.Editor.MapCreator
 {
     public class CreateMapWindow : EditorWindow
     {
+        private EnemyPathCreator m_EnemyPathCreator;
+
         private IGridManager m_GridManager;
         private IObjectSpawner m_ObjectSpawner;
         private IObjectDeleter m_ObjectDeleter;
@@ -19,6 +22,7 @@ namespace Scripts.Editor.MapCreator
         private Vector2 m_ScrollPos;
         private Vector3 m_LastGridPosition = Vector3.one * 99999;
 
+
         [MenuItem("Tools/Create Map")]
         public static void ShowWindow()
         {
@@ -27,6 +31,8 @@ namespace Scripts.Editor.MapCreator
 
         private void OnEnable()
         {
+            m_EnemyPathCreator = FindObjectOfType<EnemyPathCreator>();
+
             m_MapPrefabs = Resources.LoadAll<GameObject>("Map Blocks");
 
             m_EditorSettings = new MapEditorSettings();
@@ -86,6 +92,12 @@ namespace Scripts.Editor.MapCreator
             EditorGUILayout.EndScrollView();
 
             EditorGUILayout.Space();
+
+            if (GUILayout.Button("Create Path"))
+                m_EnemyPathCreator.CreatePath();
+
+            EditorGUILayout.Space();
+
             EditorGUILayout.LabelField("Selected Prefab", EditorStyles.boldLabel);
 
             if (m_SelectedPrefab != null)

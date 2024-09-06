@@ -1,8 +1,8 @@
-using Dreamteck.Splines;
-using Sirenix.OdinInspector;
-using System.Collections.Generic;
+using Scripts.Map;
 using System.Linq;
 using UnityEngine;
+using Dreamteck.Splines;
+using System.Collections.Generic;
 
 namespace Scripts.Path
 {
@@ -11,21 +11,21 @@ namespace Scripts.Path
         [SerializeField] private SplineComputer m_SplineComputer;
         [SerializeField] private List<Transform> m_PathPieces;
 
-        [Button("Create Path")]
-        private void CreatePath()
+        public void CreatePath()
         {
+            m_SplineComputer.transform.position = Vector3.zero;
             m_PathPieces.Clear();
             var startPiece = FindObjectsOfType<EnemyPathPiece>().FirstOrDefault(piece => piece.IsStartPiece);
 
             if (startPiece == null)
             {
-                Debug.LogError("Baþlangýç parçasý bulunamadý!");
+                Debug.LogError("Starter piece not found");
                 return;
             }
 
             if (!FindPath(startPiece.transform))
             {
-                Debug.LogError("Finish parçasýna ulaþýlamadý veya yol bulunamadý!");
+                Debug.LogError("Finish part not found or path not found");
                 return;
             }
 
@@ -41,11 +41,11 @@ namespace Scripts.Path
             var pieceComponent = currentPiece.GetComponent<EnemyPathPiece>();
             if (pieceComponent.IsEndPiece)
             {
-                Debug.Log("Bitiþ parçasýna ulaþýldý!");
+                Debug.Log("End piece reached");
                 return true;
             }
 
-            Vector3[] directions = { Vector3.right, Vector3.left, Vector3.forward, Vector3.back};
+            Vector3[] directions = { Vector3.right, Vector3.left, Vector3.forward, Vector3.back };
 
             foreach (var direction in directions)
             {
@@ -69,7 +69,7 @@ namespace Scripts.Path
         {
             if (m_PathPieces == null || m_PathPieces.Count < 2)
             {
-                Debug.LogError("Spline oluþturmak için yeterli yol parçasý yok!");
+                Debug.LogError("Not enough pieces to create spline");
                 return;
             }
 
@@ -77,14 +77,17 @@ namespace Scripts.Path
 
             for (int i = 0; i < m_PathPieces.Count; i++)
             {
+                var pos = m_PathPieces[i].position;
+
                 points[i] = new SplinePoint
                 {
-                    position = m_PathPieces[i].position,
+                    position = pos
                 };
             }
 
             m_SplineComputer.SetPoints(points);
-            Debug.Log("Spline baþarýyla oluþturuldu!");
+            m_SplineComputer.transform.position = Vector3.up * 0.5f;
+            Debug.Log("Spline created successfully!");
         }
     }
 }
