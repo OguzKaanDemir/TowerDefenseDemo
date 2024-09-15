@@ -7,6 +7,9 @@ namespace Scripts.Turrets
 {
     public class TurretBase : MonoBehaviour, IPlaceable, IDragable, IInteractable
     {
+        [field: SerializeField] public List<MeshRenderer> RenderersToChange { get; set; }
+        [field: SerializeField] public ParticleSystem PlaceParticle { get; set; }
+
         [SerializeField] private List<Transform> m_RayTransforms;
 
         private bool m_IsPlaced;
@@ -59,14 +62,23 @@ namespace Scripts.Turrets
                 if (pieces.Count == 4)
                 {
                     SetTurretPosition(pieces);
+                    PlaceParticle.Play();
+                    foreach (var renderer in RenderersToChange)
+                    {
+                        renderer.material.SetFloat("_Cutoff", 0f);
+                    }
                 }
+            }
+            else
+            {
+                Destroy(gameObject);
             }
 
             m_IsDragged = false;
             m_IsClicked = false;
         }
 
-        private Vector3 GetScreenPosition() 
+        private Vector3 GetScreenPosition()
             => Camera.main.WorldToScreenPoint(transform.position);
 
         private (bool canPlace, List<MapPiece> pieces) CheckPlacement()
