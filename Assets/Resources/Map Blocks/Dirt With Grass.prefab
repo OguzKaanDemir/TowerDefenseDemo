@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6216469476574207488}
   - component: {fileID: 8656850391595177004}
   - component: {fileID: 5526630360934362368}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Not Placeable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 603547963439173443}
   - component: {fileID: 6179907454933800861}
   - component: {fileID: 9055331377749225160}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Dirt With Grass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -167,7 +167,7 @@ GameObject:
   - component: {fileID: 2367036087369889637}
   - component: {fileID: 8179267259641533385}
   - component: {fileID: 5111084119016008970}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Grass
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -250,7 +250,7 @@ GameObject:
   - component: {fileID: 8939126586610193256}
   - component: {fileID: 8220110279204370402}
   - component: {fileID: 4270034213359996077}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Placeable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -333,7 +333,7 @@ GameObject:
   - component: {fileID: 5687147349344989146}
   - component: {fileID: 3238969160089791025}
   - component: {fileID: 8732402323091633317}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Base
   m_TagString: Untagged
   m_Icon: {fileID: 0}

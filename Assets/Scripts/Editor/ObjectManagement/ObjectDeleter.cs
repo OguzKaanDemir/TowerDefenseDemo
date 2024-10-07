@@ -8,7 +8,7 @@ namespace Scripts.Editor.ObjectManagement
     {
         public void DeleteObject(SceneView sceneView, Vector3 position)
         {
-            var colliders = Physics.OverlapBox(position + Vector3.one * 0.5f, Vector3.one * 0.05f);
+            var colliders = Physics.OverlapBox(position + Vector3.one * 0.5f, Vector3.one * 0.05f, Quaternion.identity, LayerMask.GetMask("Block"));
 
             foreach (var collider in colliders)
             {

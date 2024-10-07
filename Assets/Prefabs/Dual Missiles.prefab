@@ -5123,7 +5123,9 @@ GameObject:
   - component: {fileID: 8258955944743122338}
   - component: {fileID: 4021687421930082926}
   - component: {fileID: 1903754557601507045}
-  m_Layer: 0
+  - component: {fileID: 6947497225232324870}
+  - component: {fileID: 3262722999868966138}
+  m_Layer: 2
   m_Name: Distance Circle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5138,9 +5140,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1586656001474745010}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.00000030556467, y: 0.7071068, z: -0.7071068, w: 0.00000030556467}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.100000024, z: 0}
-  m_LocalScale: {x: 15, y: 15, z: 1}
+  m_LocalScale: {x: 20, y: 20, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1391897293553338232}
@@ -5160,7 +5162,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1586656001474745010}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -5195,6 +5197,40 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &6947497225232324870
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1586656001474745010}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e1c6461e4e7e0a469d1f7ebf67772a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Renderer: {fileID: 1903754557601507045}
+--- !u!135 &3262722999868966138
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1586656001474745010}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &2875889763236406401
 GameObject:
   m_ObjectHideFlags: 0
@@ -5258,11 +5294,16 @@ MonoBehaviour:
   - {fileID: 4327264753588546183}
   - {fileID: 6637460914905366058}
   <PlaceParticle>k__BackingField: {fileID: 6735898141861646602}
-  m_RayTransforms:
+  <IsPlaced>k__BackingField: 0
+  <IsClicked>k__BackingField: 0
+  <IsDragged>k__BackingField: 0
+  <RayTransforms>k__BackingField:
   - {fileID: 7140202427842230073}
   - {fileID: 8799020290354910480}
   - {fileID: 7463858858422819425}
   - {fileID: 2986377596607421191}
+  <DistanceCircle>k__BackingField: {fileID: 6947497225232324870}
+  <DistanceCircleRadius>k__BackingField: 5
 --- !u!65 &533070578947377894
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5341,7 +5382,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.4, z: 0}
-  m_LocalScale: {x: 0.65, y: 0.65, z: 0.65}
+  m_LocalScale: {x: 0.55, y: 0.55, z: 0.55}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8920162998586356933}
@@ -5575,7 +5616,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.00000025331974, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.2, z: 0}
-  m_LocalScale: {x: 1.5, y: 0.3, z: 1.5}
+  m_LocalScale: {x: 1.25, y: 0.25, z: 1.25}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1391897293553338232}

@@ -5,19 +5,25 @@ using System.Collections.Generic;
 
 namespace Scripts.Turrets
 {
-    public class TurretBase : MonoBehaviour, IPlaceable, IDragable, IInteractable
+    public class TurretBase : MonoBehaviour, ITurret, IPlaceable, IDragable, IInteractable
     {
         [field: SerializeField] public List<MeshRenderer> RenderersToChange { get; set; }
         [field: SerializeField] public ParticleSystem PlaceParticle { get; set; }
+        [field: SerializeField] public bool IsPlaced { get; set; }
+        [field: SerializeField] public bool IsClicked { get; set; }
+        [field: SerializeField] public bool IsDragged { get; set; }
+        [field: SerializeField] public List<Transform> RayTransforms { get; set; }
+        [field: SerializeField] public DistanceCircleController DistanceCircle { get; set; }
+        [field: SerializeField] public float DistanceCircleRadius { get; set; }
 
-        [SerializeField] private List<Transform> m_RayTransforms;
-
-        private bool m_IsPlaced;
-        private bool m_IsClicked;
-        private bool m_IsDragged;
         private Vector3 m_ClickPosition;
-
         private IPlacementValidator m_PlacementValidator = new PlacementValidator();
+
+
+        private void Start()
+        {
+            DistanceCircle.SetRadius(DistanceCircleRadius);
+        }
 
         public void OnMouseDown() => Interact();
 
@@ -27,8 +33,8 @@ namespace Scripts.Turrets
 
         public void Interact()
         {
-            m_IsClicked = true;
-            if (!m_IsPlaced)
+            IsClicked = true;
+            if (!IsPlaced)
             {
                 m_ClickPosition = Input.mousePosition - GetScreenPosition();
             }
@@ -36,29 +42,30 @@ namespace Scripts.Turrets
 
         public void Drag()
         {
-            if (m_IsPlaced || !m_IsClicked) return;
+            if (IsPlaced || !IsClicked) return;
 
             var newPosition = Input.mousePosition - m_ClickPosition;
             if (m_ClickPosition != newPosition)
             {
-                m_IsDragged = true;
+                IsDragged = true;
                 var worldPosition = Camera.main.ScreenToWorldPoint(newPosition);
                 worldPosition.z += worldPosition.y;
                 worldPosition.y = transform.position.y;
                 transform.position = worldPosition;
 
-                CheckPlacement();
+                DistanceCircle.SetActive(true);
+                DistanceCircle.SetCircleColor(CheckPlacement().canPlace);
             }
         }
 
         public void Place()
         {
-            if (m_IsPlaced) return;
+            if (IsPlaced) return;
 
             var (canPlace, pieces) = CheckPlacement();
-            if (m_IsClicked && m_IsDragged && canPlace)
+            if (IsClicked && IsDragged && canPlace)
             {
-                m_IsPlaced = true;
+                IsPlaced = true;
                 if (pieces.Count == 4)
                 {
                     SetTurretPosition(pieces);
@@ -67,6 +74,7 @@ namespace Scripts.Turrets
                     {
                         renderer.material.SetFloat("_Cutoff", 0f);
                     }
+                    DistanceCircle.SetActive(false);
                 }
             }
             else
@@ -74,8 +82,8 @@ namespace Scripts.Turrets
                 Destroy(gameObject);
             }
 
-            m_IsDragged = false;
-            m_IsClicked = false;
+            IsDragged = false;
+            IsClicked = false;
         }
 
         private Vector3 GetScreenPosition()
@@ -83,9 +91,9 @@ namespace Scripts.Turrets
 
         private (bool canPlace, List<MapPiece> pieces) CheckPlacement()
         {
-            if (!m_IsDragged) return (false, default);
+            if (!IsDragged) return (false, default);
 
-            return m_PlacementValidator.ValidatePlacement(m_RayTransforms);
+            return m_PlacementValidator.ValidatePlacement(RayTransforms);
         }
 
         private void SetTurretPosition(List<MapPiece> pieces)

@@ -7,6 +7,7 @@ namespace Scripts.Interfaces
     {
         public List<MeshRenderer> RenderersToChange { get; set; }
         public ParticleSystem PlaceParticle { get; set; }
+        public bool IsPlaced { get; set; }
         public void Place();
     }
 }
